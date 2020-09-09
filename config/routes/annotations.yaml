@@ -1,0 +1,7 @@
+depense_web_root:
+    resource: ../../src/Web/Controller/
+    type: annotation
+
+kernel:
+    resource: ../../src/Kernel.php
+    type: annotation

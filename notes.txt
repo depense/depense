@@ -1,0 +1,3 @@
+Favicon
+    - Font: Mitr
+    - Color: #55F

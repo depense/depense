@@ -1,0 +1,2 @@
+twig:
+    default_path: '%depense.web_dir%/Resources/views'
