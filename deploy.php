@@ -22,17 +22,35 @@ set('allow_anonymous_stats', false);
 
 // Hosts
 
-host('depense.net')
+host('prod')
+    ->stage('production')
+    ->hostname('depense.net')
     ->user('radhi')
-    ->set('deploy_path', '/var/www/{{application}}');
+    ->set('deploy_path', '/var/www/{{application}}')
+    ->set('branch', 'master');
+
+host('staging')
+    ->stage('staging')
+    ->hostname('staging.depense.net')
+    ->user('radhi')
+    ->set('deploy_path', '/var/www/staging.{{application}}')
+    ->set('branch', 'dev')
+    // Remove --no-dev flag
+    ->set('composer_options', '{{composer_action}} --verbose --prefer-dist --no-progress --no-interaction --optimize-autoloader --no-suggest');
 
 // Tasks
 
 task('deploy:env', function () {
     run('cd {{release_path}} && {{bin/composer}} dump-env prod');
-});
+})->onStage('production');
 
 after('deploy:writable', 'deploy:env');
+
+task('deploy:test', function () {
+    run('{{release_path}}/bin/phpunit');
+})->onStage('staging');
+
+after('deploy:cache:warmup', 'deploy:test');
 
 
 // [Optional] if deploy fails automatically unlock.
