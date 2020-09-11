@@ -55,6 +55,13 @@ $ ./bin/phpunit
 
 ### Deployment
 
+Download the latest version of `Automate` deployment tool using the following
+command:
+
+```bash
+$ curl -LSs https://automate-deployer.com/installer.php | php
+```
+
 Create a new file based on `.automate.yml.dist`
 and edit it with your own configuration.
 
