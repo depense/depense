@@ -1,6 +1,6 @@
 /.idea/
-deployer.phar
-deploy.php
+automate.phar
+.automate.yml
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php

@@ -1,0 +1,60 @@
+repository: git@github.com:depense/depense.git
+platforms:
+    staging:
+        default_branch: dev
+        max_releases: 3
+        servers:
+            dev:
+                host: staging.example.tld
+                user: user
+                ssh_key: /path/to/id_rsa
+                path: /var/www/staging.depense.net
+    production:
+        default_branch: master
+        max_releases: 3
+        servers:
+            prod:
+                host: example.tld
+                user: user
+                ssh_key: /path/to/id_rsa
+                # If you want to add the directory of the app
+                # inside /var/www directory, you need to own
+                # permission to that directory using the following command:
+                # sudo mkdir /var/www/<app_name>
+                # sudo setfacl -m u:<user>:rwX /var/www/<app_name>
+                path: /var/www/depense.net
+shared_folders:
+    - var/log
+    - var/sessions
+shared_files:
+    - .env.local
+    - .env.local.php
+on_deploy:
+    - cmd: "composer install --optimize-autoloader --no-progress --no-interaction --no-suggest"
+      only: dev
+    - cmd: "composer install --no-dev --optimize-autoloader --no-progress --no-interaction --no-suggest"
+      only: prod
+    - cmd: "composer dump-env prod"
+      only: prod
+    # Set writable dirs
+    # Here we used the `whami` besides the www-data user
+    # cause the user itself can write on this directory
+    # specially when trying to use bin/console command.
+    # -L: logical walk, follow symbolic links: cause we're sharing /var directory
+    # -R: recurse into subdirectories: for /log and /cache dirs
+    # DECIDED TO SET IT MANUALLY BEFORE THE FIRST DEPLOY
+    # - "setfacl -dL -R -m u:www-data:rwX -m u:`whoami`:rwX var"
+    # Symfony commands
+    - "php bin/console cache:clear --no-interaction --no-warmup"
+    - "php bin/console cache:warmup --no-interaction"
+post_deploy:
+    - cmd: "php bin/phpunit"
+      only: dev
+plugins:
+    # Maybe we need to restart/clear cache of php-fpm here.
+    # NOTE: You need to add your user to the www-data group
+    # using this command: sudo usermod -a -G www-data <user>
+    cache_tool:
+        opcache: true
+        apcu: false
+        apc: false
