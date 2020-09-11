@@ -55,6 +55,13 @@ $ ./bin/phpunit
 
 ### Deployment
 
+Create a new file based on `.automate.yml.dist`
+and edit it with your own configuration.
+
+```bash
+$ cp .automate.yml.dist automate.yml
+```
+
 For each deployment process for this application the desired path is
 `/var/www/<staging|production>.depense.net`.
 
