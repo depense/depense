@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Depense\Tests\Integration;
+namespace Depense\Tests\Integration\Web;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
