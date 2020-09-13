@@ -1,7 +1,5 @@
-DEPENSE_PROJECT_DIR ?= $(realpath ./)
-
-DEPENSE_SYMFONY_CONSOLE := php $(DEPENSE_PROJECT_DIR)/bin/console --no-interaction --quiet
-DEPENSE_PHPUNIT_CONSOLE := php $(DEPENSE_PROJECT_DIR)/bin/phpunit
+DEPENSE_SYMFONY_CONSOLE := ./bin/console --no-interaction --quiet
+DEPENSE_PHPUNIT_CONSOLE := ./bin/phpunit
 
 test:
 	@$(DEPENSE_SYMFONY_CONSOLE) --env=test doctrine:database:create --if-not-exists
