@@ -29,6 +29,7 @@ shared_folders:
 shared_files:
     - .env.local
     - .env.local.php
+    - .env.test.local
 on_deploy:
     - cmd: "composer install --optimize-autoloader --no-progress --no-interaction --no-suggest"
       only: dev
