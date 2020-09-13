@@ -29,22 +29,22 @@ class ActionPerformer
 
     public function perform(ActionInterface $action)
     {
-        if (null !== $handler = $this->actionRegistry->getHandler(get_class($action))) {
-            if (is_callable($handler)) {
-                $this->entityManager->beginTransaction();
+        $handler = $this->actionRegistry->getHandler(get_class($action));
 
-                try {
-                    $result = $handler($action);
+        if (null !== $handler && is_callable($handler)) {
+            $this->entityManager->beginTransaction();
 
-                    $this->entityManager->flush();
-                    $this->entityManager->commit();
+            try {
+                $result = $handler($action);
 
-                    return $result;
-                } catch (Exception $exception) {
-                    $this->entityManager->rollback();
+                $this->entityManager->flush();
+                $this->entityManager->commit();
 
-                    throw $exception;
-                }
+                return $result;
+            } catch (Exception $exception) {
+                $this->entityManager->rollback();
+
+                throw $exception;
             }
         }
 
