@@ -1,5 +1,10 @@
-depense_web_root:
-    resource: ../../src/Web/Controller/
+depense_app:
+    resource: ../../src/Web/Controller/App/
+    type: annotation
+    prefix: /app
+
+depense_root:
+    resource: ../../src/Web/Controller/Root/
     type: annotation
 
 kernel:

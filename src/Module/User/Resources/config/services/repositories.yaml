@@ -1,0 +1,7 @@
+services:
+    _defaults:
+        autowire: true
+
+    Depense\Module\User\Repository\UserRepository:
+        arguments:
+            $className: 'Depense\Module\User\Model\User'

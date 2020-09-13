@@ -1,3 +1,23 @@
 Favicon
     - Font: Mitr
     - Color: #55F
+$this->perform(new RegisterUser($user))
+
+RegisterUserHandler {
+    public function __invoke(RegisterUser $user)
+    {
+        // Do the job.
+    }
+}
+
+[
+    'action_class' => 'handler_class',
+    ...
+]
+
+- given we have an action called RegisterUser
+- we should be able to find RegisterUser<Handler> (using class_exists($actionClass . 'Handler'))
+- otherwise 'action_class' should have the value of NULL
+- in that case, the perform() method call should return nothing if there is no handler for the action.
+
+registry->perform()

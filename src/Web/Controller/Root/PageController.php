@@ -10,14 +10,14 @@
 
 declare(strict_types=1);
 
-namespace Depense\Web\Controller;
+namespace Depense\Web\Controller\Root;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route(name="web_page_")
+ * @Route(name="root_page_")
  */
 class PageController extends AbstractController
 {
@@ -28,6 +28,6 @@ class PageController extends AbstractController
      */
     public function home(): Response
     {
-        return $this->render('home/index.html.twig');
+        return $this->render('root/home/index.html.twig');
     }
 }

@@ -1,0 +1,36 @@
+security:
+    enable_authenticator_manager: true
+    
+    encoders:
+        Depense\Module\User\Model\User:
+            algorithm: auto
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        user_provider:
+            id: Depense\Module\User\Provider\UserEmailProvider
+    
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            lazy: true
+            provider: user_provider
+            custom_authenticators:
+                - Depense\Web\Security\LoginFormAuthenticator
+            entry_point: Depense\Web\Security\LoginFormAuthenticator
+            logout:
+                path: root_security_logout
+            remember_me:
+                always_remember_me: true
+                secret: '%kernel.secret%'
+                lifetime: 604800 # 1 week in seconds
+                path: /
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        - { path: ^/app, roles: ROLE_USER }
+        - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/logout, roles: ROLE_USER }
+        - { path: ^/, roles: PUBLIC_ACCESS }

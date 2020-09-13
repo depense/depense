@@ -14,7 +14,7 @@ namespace Depense\Tests\Integration\Web;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class PageControllerTest extends WebTestCase
+class HomepageTest extends WebTestCase
 {
     public function testDisplaysHomepage()
     {

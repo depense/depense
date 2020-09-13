@@ -47,8 +47,9 @@ on_deploy:
     # Symfony commands
     - "php bin/console cache:clear --no-interaction --no-warmup"
     - "php bin/console cache:warmup --no-interaction"
+    - "php bin/console doctrine:migrations:migrate --no-interaction"
 post_deploy:
-    - cmd: "php bin/phpunit"
+    - cmd: "make test"
       only: dev
 plugins:
     # Maybe we need to restart/clear cache of php-fpm here.

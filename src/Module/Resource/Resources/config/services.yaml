@@ -2,6 +2,13 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
+    
+    # Config for gedmo doctrine extensions
+    Gedmo\Timestampable\TimestampableListener:
+        calls:
+            - setAnnotationReader: ['@annotation_reader']
+        tags:
+            - { name: 'doctrine.event_subscriber' }
 
     Depense\Module\Resource\:
         resource: '../../'

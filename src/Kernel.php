@@ -2,7 +2,9 @@
 
 namespace Depense;
 
+use Depense\Module\Core as Core;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
@@ -10,6 +12,17 @@ use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
+
+    protected function build(ContainerBuilder $container)
+    {
+        $container->registerForAutoconfiguration(Core\Action\ActionInterface::class)
+            ->addTag('depense.core.action');
+
+        $container->registerForAutoconfiguration(Core\Action\HandlerInterface::class)
+            ->addTag('depense.core.action_handler');
+
+        $container->addCompilerPass(new Core\DependencyInjection\Compiler\ActionRegistryPass());
+    }
 
     protected function configureContainer(ContainerConfigurator $container): void
     {

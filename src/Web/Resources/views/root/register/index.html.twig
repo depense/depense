@@ -1,0 +1,12 @@
+{% extends 'root/layout.html.twig' %}
+
+{% block title %}Register - Depense{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button id="btnRegister" type="submit">
+        Register
+    </button>
+    {{ form_end(form) }}
+{% endblock %}

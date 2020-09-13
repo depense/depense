@@ -51,7 +51,7 @@ class EntityRepository implements RepositoryInterface
      */
     public function findById($resourceId): ?object
     {
-        return $this->entityManager->find($this->className, $resourceId);
+        return (null !== $resourceId) ? $this->entityManager->find($this->className, $resourceId) : null;
     }
 
     /**
@@ -64,5 +64,12 @@ class EntityRepository implements RepositoryInterface
             ->from($this->className, 'o')
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    protected function createQueryBuilder()
+    {
+        return $this->entityManager->createQueryBuilder()
+            ->select('o')
+            ->from($this->className, 'o');
     }
 }
