@@ -12,20 +12,39 @@ declare(strict_types=1);
 
 namespace Depense\Module\Core\Action;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Exception;
+
 class ActionPerformer
 {
     protected ActionRegistry $actionRegistry;
 
-    public function __construct(ActionRegistry $actionRegistry)
+    protected EntityManagerInterface $entityManager;
+
+    public function __construct(ActionRegistry $actionRegistry, EntityManagerInterface $entityManager)
     {
         $this->actionRegistry = $actionRegistry;
+        $this->entityManager = $entityManager;
     }
 
     public function perform(ActionInterface $action)
     {
         if (null !== $handler = $this->actionRegistry->getHandler(get_class($action))) {
             if (is_callable($handler)) {
-                return $handler($action);
+                $this->entityManager->beginTransaction();
+
+                try {
+                    $result = $handler($action);
+
+                    $this->entityManager->flush();
+                    $this->entityManager->commit();
+
+                    return $result;
+                } catch (Exception $exception) {
+                    $this->entityManager->rollback();
+
+                    throw $exception;
+                }
             }
         }
 

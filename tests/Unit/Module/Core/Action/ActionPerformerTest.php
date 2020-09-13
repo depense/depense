@@ -14,6 +14,8 @@ namespace Depense\Tests\Unit\Module\Core\Action;
 
 use Depense\Module\Core\Action\ActionPerformer;
 use Depense\Module\Core\Action\ActionRegistry;
+use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class ActionPerformerTest extends TestCase
@@ -27,11 +29,13 @@ class ActionPerformerTest extends TestCase
         $handlers = [
             // Normally it's injected via the compiler pass
             // and passed by it's reference.
-            new \Depense\Tests\Unit\Module\Core\Action\Fixtures\DummyHandler()
+            new \Depense\Tests\Unit\Module\Core\Action\Fixtures\DummyHandler(),
+            new \Depense\Tests\Unit\Module\Core\Action\Fixtures\DummyExceptionHandler()
         ];
 
         $actions = [
-            \Depense\Tests\Unit\Module\Core\Action\Fixtures\Dummy::class
+            \Depense\Tests\Unit\Module\Core\Action\Fixtures\Dummy::class,
+            \Depense\Tests\Unit\Module\Core\Action\Fixtures\DummyException::class
         ];
 
         foreach ($handlers as $handler) {
@@ -43,14 +47,46 @@ class ActionPerformerTest extends TestCase
         }
     }
 
-    public function testPerform(): void
+    public function testPerformTransactionCommit(): void
     {
-        $performer = new ActionPerformer($this->registry);
+        /** @var MockObject|EntityManagerInterface $entityManager */
+        $entityManager = $this->getMockBuilder('Doctrine\ORM\EntityManagerInterface')->getMock();
+
+        $performer = new ActionPerformer($this->registry, $entityManager);
+
+        $entityManager->expects($this->once())
+            ->method('beginTransaction');
+
+        $entityManager->expects($this->once())
+            ->method('flush');
+
+        $entityManager->expects($this->once())
+            ->method('commit');
 
         $result = $performer->perform(
             new \Depense\Tests\Unit\Module\Core\Action\Fixtures\Dummy('some data')
         );
 
         $this->assertSame('some data', $result);
+    }
+
+    public function testPerformTransactionRollback(): void
+    {
+        /** @var MockObject|EntityManagerInterface $entityManager */
+        $entityManager = $this->getMockBuilder('Doctrine\ORM\EntityManagerInterface')->getMock();
+
+        $performer = new ActionPerformer($this->registry, $entityManager);
+
+        $entityManager->expects($this->once())
+            ->method('beginTransaction');
+
+        $entityManager->expects($this->once())
+            ->method('rollback');
+
+        $this->expectException(\Exception::class);
+
+        $performer->perform(
+            new \Depense\Tests\Unit\Module\Core\Action\Fixtures\DummyException()
+        );
     }
 }

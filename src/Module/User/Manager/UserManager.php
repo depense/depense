@@ -16,7 +16,6 @@ use Depense\Module\User\Model\UserInterface;
 use Depense\Module\User\Repository\UserRepository;
 use Depense\Module\User\Util\UserCanonicalUpdater;
 use Depense\Module\User\Util\UserPasswordUpdater;
-use Doctrine\ORM\EntityManagerInterface;
 
 class UserManager implements UserManagerInterface
 {
@@ -26,18 +25,11 @@ class UserManager implements UserManagerInterface
 
     protected UserPasswordUpdater $passwordUpdater;
 
-    protected EntityManagerInterface $entityManager;
-
-    public function __construct(
-        UserRepository $userRepository,
-        UserCanonicalUpdater $canonicalUpdater,
-        UserPasswordUpdater $passwordUpdater,
-        EntityManagerInterface $entityManager)
+    public function __construct(UserRepository $userRepository, UserCanonicalUpdater $canonicalUpdater, UserPasswordUpdater $passwordUpdater)
     {
         $this->userRepository = $userRepository;
         $this->canonicalUpdater = $canonicalUpdater;
         $this->passwordUpdater = $passwordUpdater;
-        $this->entityManager = $entityManager;
     }
 
     /**
@@ -64,8 +56,6 @@ class UserManager implements UserManagerInterface
     public function deleteUser(UserInterface $user): void
     {
         $this->userRepository->remove($user);
-
-        $this->entityManager->flush();
     }
 
     /**
@@ -79,7 +69,5 @@ class UserManager implements UserManagerInterface
         if (null === $user->getId()) {
             $this->userRepository->add($user);
         }
-
-        $this->entityManager->flush();
     }
 }

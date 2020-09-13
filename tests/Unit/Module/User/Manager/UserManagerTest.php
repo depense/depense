@@ -17,17 +17,11 @@ use Depense\Module\User\Model\UserInterface;
 use Depense\Module\User\Repository\UserRepository;
 use Depense\Module\User\Util\UserCanonicalUpdater;
 use Depense\Module\User\Util\UserPasswordUpdater;
-use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class UserManagerTest extends TestCase
 {
-    /**
-     * @var MockObject|EntityManagerInterface
-     */
-    private MockObject $entityManager;
-
     /**
      * @var MockObject|UserRepository
      */
@@ -47,7 +41,6 @@ class UserManagerTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->entityManager = $this->getMockBuilder('Doctrine\ORM\EntityManagerInterface')->getMock();
         $this->userRepository = $this->getMockBuilder('Depense\Module\User\Repository\UserRepository')
             ->disableOriginalConstructor()
             ->getMock();
@@ -59,7 +52,7 @@ class UserManagerTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->userManager = new UserManager($this->userRepository, $this->canonicalUpdater, $this->passwordUpdater, $this->entityManager);
+        $this->userManager = new UserManager($this->userRepository, $this->canonicalUpdater, $this->passwordUpdater);
     }
 
     public function testFindUserByEmail(): void
@@ -100,10 +93,6 @@ class UserManagerTest extends TestCase
             ->method('remove')
             ->with($user);
 
-
-        $this->entityManager->expects($this->once())
-            ->method('flush');
-
         $this->userManager->deleteUser($user);
     }
 
@@ -129,9 +118,6 @@ class UserManagerTest extends TestCase
             ->method('add')
             ->with($user);
 
-        $this->entityManager->expects($this->once())
-            ->method('flush');
-
         $this->userManager->updateUser($user);
     }
 
@@ -155,9 +141,6 @@ class UserManagerTest extends TestCase
 
         $this->userRepository->expects($this->never())
             ->method('add');
-
-        $this->entityManager->expects($this->once())
-            ->method('flush');
 
         $this->userManager->updateUser($user);
     }

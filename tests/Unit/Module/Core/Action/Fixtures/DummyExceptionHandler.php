@@ -10,17 +10,14 @@
 
 declare(strict_types=1);
 
-namespace Depense\Module\User\Action;
+namespace Depense\Tests\Unit\Module\Core\Action\Fixtures;
 
 use Depense\Module\Core\Action\HandlerInterface;
-use DateTime;
 
-class UpdateUserLastLoginHandler implements HandlerInterface
+class DummyExceptionHandler implements HandlerInterface
 {
-    public function __invoke(UpdateUserLastLogin $message): void
+    public function __invoke(DummyException $exception): void
     {
-        $user = $message->getUser();
-
-        $user->setLastLogin(new DateTime());
+        throw new \Exception('Simple exception');
     }
 }

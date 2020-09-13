@@ -12,12 +12,9 @@ declare(strict_types=1);
 
 namespace Depense\Tests\Unit\Module\User\Action;
 
-use DateTime;
 use Depense\Module\User\Action\UpdateUserLastLogin;
 use Depense\Module\User\Action\UpdateUserLastLoginHandler;
 use Depense\Module\User\Model\User;
-use Doctrine\ORM\EntityManagerInterface;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -27,13 +24,7 @@ class UpdateUserLastLoginHandlerTest extends TestCase
 {
     public function testUpdateUserLastLogin(): void
     {
-        /** @var EntityManagerInterface|MockObject $entityManager */
-        $entityManager = $this->getMockBuilder('Doctrine\ORM\EntityManagerInterface')->getMock();
-
-        $handler = new UpdateUserLastLoginHandler($entityManager);
-
-        $entityManager->expects($this->once())
-            ->method('flush');
+        $handler = new UpdateUserLastLoginHandler();
 
         $handler(new UpdateUserLastLogin($user = new User()));
 

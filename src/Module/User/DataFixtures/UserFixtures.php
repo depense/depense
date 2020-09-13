@@ -36,5 +36,7 @@ class UserFixtures extends Fixture
         $user->setPlainPassword('password');
 
         $this->userManager->updateUser($user);
+
+        $manager->flush();
     }
 }
