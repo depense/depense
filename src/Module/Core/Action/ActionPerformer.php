@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Depense\Module\Core\Action;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
+use Throwable;
 
 class ActionPerformer
 {
@@ -41,7 +41,7 @@ class ActionPerformer
                 $this->entityManager->commit();
 
                 return $result;
-            } catch (Exception $exception) {
+            } catch (Throwable $exception) {
                 $this->entityManager->rollback();
 
                 throw $exception;
