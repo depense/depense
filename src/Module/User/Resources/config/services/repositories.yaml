@@ -5,3 +5,7 @@ services:
     Depense\Module\User\Repository\UserRepository:
         arguments:
             $className: 'Depense\Module\User\Model\User'
+    
+    Depense\Module\User\Repository\UserOAuthRepository:
+        arguments:
+            $className: 'Depense\Module\User\Model\UserOAuth'

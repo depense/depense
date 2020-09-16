@@ -15,6 +15,9 @@ namespace Depense\Module\User\Model;
 use DateTime;
 use Depense\Module\Resource\Model\TimestampableTrait;
 use DateTimeInterface;
+use Depense\Module\User\Enum\UserRole;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 class User implements UserInterface
 {
@@ -50,13 +53,27 @@ class User implements UserInterface
      *
      * @var array
      */
-    protected array $roles = [UserInterface::DEFAULT_ROLE];
+    protected array $roles = [UserRole::DEFAULT];
 
     protected ?DateTimeInterface $lastLogin = null;
+
+    /**
+     * @var Collection|UserOAuthInterface[]
+     *
+     * @psalm-var Collection<array-key, UserOAuthInterface>
+     */
+    protected Collection $oauthAccounts;
+
+    protected ?string $firstName;
+
+    protected ?string $lastName;
 
     public function __construct()
     {
         $this->createdAt = new DateTime();
+
+        /** @var ArrayCollection<array-key, UserOAuthInterface> $this->oauthAccounts */
+        $this->oauthAccounts = new ArrayCollection();
     }
 
     /**
@@ -167,6 +184,59 @@ class User implements UserInterface
             unset($this->roles[$key]);
             $this->roles = array_values($this->roles);
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getOAuthAccounts(): Collection
+    {
+        return $this->oauthAccounts;
+    }
+
+    public function getOAuthAccount(string $provider): ?UserOAuthInterface
+    {
+        if ($this->oauthAccounts->isEmpty()) {
+            return null;
+        }
+
+        $filtered = $this->oauthAccounts->filter(function (UserOAuthInterface $oauth) use ($provider): bool {
+            return $provider === $oauth->getProvider();
+        });
+
+        if ($filtered->isEmpty()) {
+            return null;
+        }
+
+        return $filtered->current();
+    }
+
+    public function addOAuthAccount(UserOAuthInterface $oauth): void
+    {
+        if (!$this->oauthAccounts->contains($oauth)) {
+            $this->oauthAccounts->add($oauth);
+            $oauth->setUser($this);
+        }
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(?string $firstName): void
+    {
+        $this->firstName = $firstName;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(?string $lastName): void
+    {
+        $this->lastName = $lastName;
     }
 
     /**

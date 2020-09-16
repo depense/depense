@@ -26,6 +26,8 @@ class RegisterTest extends WebTestCase
 
         $client->submitForm('btnRegister', [
             'register_user[email]' => 'foo@bar.com',
+            'register_user[firstName]' => 'foo',
+            'register_user[lastName]' => 'bar',
             'register_user[plainPassword][first]' => 'password',
             'register_user[plainPassword][second]' => 'password'
         ]);
@@ -61,6 +63,8 @@ class RegisterTest extends WebTestCase
 
         $client->submitForm('btnRegister', [
             'register_user[email]' => 'foo@bar.com',
+            'register_user[firstName]' => 'foo',
+            'register_user[lastName]' => 'bar',
             'register_user[plainPassword][first]' => 'foobar',
             'register_user[plainPassword][second]' => 'foobaz'
         ]);
@@ -70,6 +74,30 @@ class RegisterTest extends WebTestCase
 
         $client->submitForm('btnRegister', [
             'register_user[email]' => 'foo@bar.com',
+            'register_user[firstName]' => '',
+            'register_user[lastName]' => 'bar',
+            'register_user[plainPassword][first]' => 'foobar',
+            'register_user[plainPassword][second]' => 'foobaz'
+        ]);
+
+        // Blank first name
+        $this->assertRouteSame('root_register');
+
+        $client->submitForm('btnRegister', [
+            'register_user[email]' => 'foo@bar.com',
+            'register_user[firstName]' => 'foo',
+            'register_user[lastName]' => '',
+            'register_user[plainPassword][first]' => 'foobar',
+            'register_user[plainPassword][second]' => 'foobaz'
+        ]);
+
+        // Blank last name
+        $this->assertRouteSame('root_register');
+
+        $client->submitForm('btnRegister', [
+            'register_user[email]' => 'foo@bar.com',
+            'register_user[firstName]' => 'foo',
+            'register_user[lastName]' => 'bar',
             'register_user[plainPassword][first]' => 'foobar',
             'register_user[plainPassword][second]' => 'foobar'
         ]);

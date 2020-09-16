@@ -33,6 +33,17 @@
         <field name="lastLogin" column="last_login" type="datetime" nullable="true"/>
         <field name="roles" column="roles" type="array" nullable="false"/>
 
+        <field name="firstName" column="first_name" type="string" nullable="true"/>
+        <field name="lastName" column="last_name" type="string" nullable="true"/>
+
+        <one-to-many field="oauthAccounts"
+                     target-entity="Depense\Module\User\Model\UserOAuth"
+                     mapped-by="user">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
+
         <field name="createdAt" column="created_at" type="datetime">
             <gedmo:timestampable on="create"/>
         </field>

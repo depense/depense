@@ -14,6 +14,7 @@ namespace Depense\Module\User\Model;
 
 use Depense\Module\Resource\Model\ResourceInterface;
 use Depense\Module\Resource\Model\TimestampableInterface;
+use Doctrine\Common\Collections\Collection;
 use Serializable;
 use Stringable;
 use DateTimeInterface;
@@ -62,4 +63,15 @@ interface UserInterface extends
     public function addRole(string $role): void;
 
     public function removeRole(string $role): void;
+
+    /**
+     * @return Collection|UserOAuthInterface[]
+     *
+     * @psalm-return Collection<array-key, UserOAuthInterface>
+     */
+    public function getOAuthAccounts(): Collection;
+
+    public function getOAuthAccount(string $provider): ?UserOAuthInterface;
+
+    public function addOAuthAccount(UserOAuthInterface $oauth): void;
 }
