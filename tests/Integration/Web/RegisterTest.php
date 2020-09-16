@@ -14,7 +14,7 @@ namespace Depense\Tests\Integration\Web;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class RegisterUserTest extends WebTestCase
+class RegisterTest extends WebTestCase
 {
     public function testRegisterUserAndThenAuthenticateHim(): void
     {
@@ -48,7 +48,7 @@ class RegisterUserTest extends WebTestCase
         ]);
 
         // Blank email
-        $this->assertRouteSame('root_register_user');
+        $this->assertRouteSame('root_register');
 
         $client->submitForm('btnRegister', [
             'register_user[email]' => 'foo@bar.com',
@@ -57,7 +57,7 @@ class RegisterUserTest extends WebTestCase
         ]);
 
         // Blank password
-        $this->assertRouteSame('root_register_user');
+        $this->assertRouteSame('root_register');
 
         $client->submitForm('btnRegister', [
             'register_user[email]' => 'foo@bar.com',
@@ -66,7 +66,7 @@ class RegisterUserTest extends WebTestCase
         ]);
 
         // Not matching passwords
-        $this->assertRouteSame('root_register_user');
+        $this->assertRouteSame('root_register');
 
         $client->submitForm('btnRegister', [
             'register_user[email]' => 'foo@bar.com',

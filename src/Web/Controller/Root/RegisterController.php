@@ -22,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Depense\Web\Controller\AbstractController;
 
-class RegisterUserController extends AbstractController
+class RegisterController extends AbstractController
 {
     /**
      * @param Request                    $request
@@ -31,7 +31,7 @@ class RegisterUserController extends AbstractController
      *
      * @return Response
      *
-     * @Route("/register", name="root_register_user")
+     * @Route("/register", name="root_register")
      */
     public function register(Request $request, UserAuthenticatorInterface $authenticator, LoginFormAuthenticator $formAuthenticator): Response
     {
