@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ This file is part of the Depense.Net package.
+  ~
+  ~ (c) Mohamed Radhi GUENNICHI <rg@mate.tn> <+216 50 711 816>
+  ~
+  ~ For the full copyright and license information, please view the LICENSE
+  ~ file that was distributed with this source code.
+-->
+
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Depense\Module\User\Model\UserPreference" table="users_preferences">
+        <id name="id" column="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <one-to-one field="user" target-entity="Depense\Module\User\Model\User">
+            <join-column name="user_id" referenced-column-name="id" on-delete="CASCADE"/>
+        </one-to-one>
+
+        <many-to-one field="activeWallet" target-entity="Depense\Module\Wallet\Model\Wallet">
+            <join-column name="active_wallet_id" referenced-column-name="id" on-delete="SET NULL"/>
+        </many-to-one>
+
+        <field name="createdAt" column="created_at" type="datetime">
+            <gedmo:timestampable on="create"/>
+        </field>
+        <field name="updatedAt" column="updated_at" type="datetime" nullable="true">
+            <gedmo:timestampable on="update"/>
+        </field>
+    </entity>
+</doctrine-mapping>

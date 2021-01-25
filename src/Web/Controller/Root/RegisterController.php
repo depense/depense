@@ -14,7 +14,7 @@ namespace Depense\Web\Controller\Root;
 
 use Depense\Module\User\Action\RegisterUser;
 use Depense\Module\User\Model\User;
-use Depense\Web\Form\RegisterUserType;
+use Depense\Web\Form\RegisterType;
 use Depense\Web\Security\LoginFormAuthenticator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,7 +35,7 @@ class RegisterController extends AbstractController
      */
     public function register(Request $request, UserAuthenticatorInterface $authenticator, LoginFormAuthenticator $formAuthenticator): Response
     {
-        $form = $this->createForm(RegisterUserType::class, $user = new User());
+        $form = $this->createForm(RegisterType::class, $user = new User());
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

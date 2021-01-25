@@ -1,0 +1,29 @@
+words:
+    email: Email address
+    first_name: Forename
+    last_name: Surname
+    password: Password
+    signin: Sign in
+    or: Or
+    login: Log in
+    register: Register
+    terms_of_service: Terms of Service
+    logout: Log out
+    currency: Currency
+wallet:
+    name: Name
+    balance: Balance
+phrases:
+    general:
+        create_account: Create an account
+        new_to_depense: New to Depense.Net?
+        already_have_account: Already have an account?
+    login:
+        description: Log in using your account on Depense.Net
+        signin_with_google: Sign in with Google
+    register:
+        join_depense: Join Depense
+        description: Create your account on Depense.Net
+        register_with_google: Register with Google
+        create_account: Create account
+        by_creating_you_agree_to_the: By creating an account, you agree to the

@@ -25,11 +25,10 @@ class RegisterTest extends WebTestCase
         $client->request('GET', '/register');
 
         $client->submitForm('btnRegister', [
-            'register_user[email]' => 'foo@bar.com',
-            'register_user[firstName]' => 'foo',
-            'register_user[lastName]' => 'bar',
-            'register_user[plainPassword][first]' => 'password',
-            'register_user[plainPassword][second]' => 'password'
+            'register[email]' => 'foo@bar.com',
+            'register[firstName]' => 'foo',
+            'register[lastName]' => 'bar',
+            'register[plainPassword]' => 'password'
         ]);
 
         $this->assertResponseRedirects('/app/overview');
@@ -44,62 +43,50 @@ class RegisterTest extends WebTestCase
         $client->request('GET', '/register');
 
         $client->submitForm('btnRegister', [
-            'register_user[email]' => '',
-            'register_user[plainPassword][first]' => 'password',
-            'register_user[plainPassword][second]' => 'password'
+            'register[email]' => '',
+            'register[firstName]' => 'foo',
+            'register[lastName]' => 'bar',
+            'register[plainPassword]' => 'password'
         ]);
 
         // Blank email
         $this->assertRouteSame('root_register');
 
         $client->submitForm('btnRegister', [
-            'register_user[email]' => 'foo@bar.com',
-            'register_user[plainPassword][first]' => '',
-            'register_user[plainPassword][second]' => ''
+            'register[email]' => 'foo@bar.com',
+            'register[firstName]' => 'foo',
+            'register[lastName]' => 'bar',
+            'register[plainPassword]' => ''
         ]);
 
         // Blank password
         $this->assertRouteSame('root_register');
 
         $client->submitForm('btnRegister', [
-            'register_user[email]' => 'foo@bar.com',
-            'register_user[firstName]' => 'foo',
-            'register_user[lastName]' => 'bar',
-            'register_user[plainPassword][first]' => 'foobar',
-            'register_user[plainPassword][second]' => 'foobaz'
-        ]);
-
-        // Not matching passwords
-        $this->assertRouteSame('root_register');
-
-        $client->submitForm('btnRegister', [
-            'register_user[email]' => 'foo@bar.com',
-            'register_user[firstName]' => '',
-            'register_user[lastName]' => 'bar',
-            'register_user[plainPassword][first]' => 'foobar',
-            'register_user[plainPassword][second]' => 'foobaz'
+            'register[email]' => 'foo@bar.com',
+            'register[firstName]' => '',
+            'register[lastName]' => 'bar',
+            'register[plainPassword]' => 'foobar'
         ]);
 
         // Blank first name
         $this->assertRouteSame('root_register');
 
         $client->submitForm('btnRegister', [
-            'register_user[email]' => 'foo@bar.com',
-            'register_user[firstName]' => 'foo',
-            'register_user[lastName]' => '',
-            'register_user[plainPassword][first]' => 'foobar',
-            'register_user[plainPassword][second]' => 'foobaz'
+            'register[email]' => 'foo@bar.com',
+            'register[firstName]' => 'foo',
+            'register[lastName]' => '',
+            'register[plainPassword]' => 'foobar'
         ]);
 
         // Blank last name
         $this->assertRouteSame('root_register');
 
         $client->submitForm('btnRegister', [
-            'register_user[email]' => 'foo@bar.com',
-            'register_user[firstName]' => 'foo',
-            'register_user[lastName]' => 'bar',
-            'register_user[plainPassword][first]' => 'foobar',
-            'register_user[plainPassword][second]' => 'foobar'
+            'register[email]' => 'foo@bar.com',
+            'register[firstName]' => 'foo',
+            'register[lastName]' => 'bar',
+            'register[plainPassword]' => 'foobar'
         ]);
 
         // Valid data

@@ -3,7 +3,76 @@
 {% block title %}App Homepage - Depense{% endblock %}
 
 {% block body %}
-    <h1>Welcome, {{ app.user }}</h1>
+    <div class="row mb-3">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <span class="text-muted">Balance</span>
+                    <h3 class="mt-1 font-weight-bold mb-0">1 512.000 TND</h3>
+                </div>
+            </div>
+        </div>
 
-    <p>This is the application homepage.</p>
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <span class="text-muted">Today</span>
+                    <h3 class="mt-1 font-weight-bold mb-0">32.000 TND</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <span class="text-muted">Same day last week</span>
+                    <h3 class="mt-1 font-weight-bold mb-0">0.000 TND</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <span class="text-muted">This week</span>
+                    <h4 class="mt-1 font-weight-bold mb-0">64.000 TND</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <span class="text-muted">Last week</span>
+                    <h4 class="mt-1 font-weight-bold mb-0">328.400 TND</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <span class="text-muted">This month</span>
+                    <h4 class="mt-1 font-weight-bold mb-0">1 331.660 TND</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <span class="text-muted">Last month</span>
+                    <h4 class="mt-1 font-weight-bold mb-0">788.000 TND</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-12">
+            <a href="" class="btn btn-success">New transaction</a>
+        </div>
+    </div>
 {% endblock %}

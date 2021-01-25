@@ -1,0 +1,20 @@
+// Bootstrap
+$navbar-dark-brand-color: #fff !default;
+$navbar-dark-color: #fff !default;
+$navbar-padding-y: .3rem;
+$gray-dark: #263238;
+$body-color: $gray-dark;
+$input-color: $gray-dark;
+$font-size-base: .875rem;
+$dropdown-link-active-bg: #576adc;
+// Depense
+
+$depense-primary: #3949ab !default;
+$depense-light: #f4f6f8 !default;
+$depense-secondary: #546e7a !default;
+
+$depense-colors: (
+    'primary': $depense-primary,
+    'light': $depense-light,
+    'secondary': $depense-secondary
+);

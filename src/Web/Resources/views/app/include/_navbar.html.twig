@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-lg navbar-dark depense-bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="{{ path('app_page_overview') }}">Depense.Net</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            {#<ul class="navbar-nav align-items-center mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+        </ul>#}
+
+            <ul class="navbar-nav align-items-center ml-auto">
+                <li class="nav-item">
+                    <div class="dropdown">
+                        <a type="button" class="nav-link pr-0 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ depense.user.fullName }}
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{{ path('root_security_logout') }}">{{ 'words.logout'|trans }}</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

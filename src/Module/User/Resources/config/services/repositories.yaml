@@ -9,3 +9,7 @@ services:
     Depense\Module\User\Repository\UserOAuthRepository:
         arguments:
             $className: 'Depense\Module\User\Model\UserOAuth'
+    
+    Depense\Module\User\Repository\UserPreferenceRepository:
+        arguments:
+            $className: 'Depense\Module\User\Model\UserPreference'

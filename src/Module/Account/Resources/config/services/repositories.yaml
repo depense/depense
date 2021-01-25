@@ -1,0 +1,7 @@
+services:
+    _defaults:
+        autowire: true
+
+    Depense\Module\Account\Repository\AccountRepository:
+        arguments:
+            $className: 'Depense\Module\Account\Model\Account'

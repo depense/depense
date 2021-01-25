@@ -1,0 +1,7 @@
+services:
+    _defaults:
+        autowire: true
+
+    Depense\Module\Wallet\Repository\WalletRepository:
+        arguments:
+            $className: 'Depense\Module\Wallet\Model\Wallet'

@@ -1,0 +1,14 @@
+imports:
+    - { resource: services/repositories.yaml }
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Depense\Module\Wallet\:
+        resource: '../../'
+        exclude:
+            - '../../Resources/'
+            - '../../Model/'
+            - '../../Repository/'

@@ -12,18 +12,19 @@ declare(strict_types=1);
 
 namespace Depense\Module\User\DataFixtures;
 
-use Depense\Module\User\Manager\UserManagerInterface;
+use Depense\Module\Core\Action\ActionPerformer;
+use Depense\Module\User\Action\RegisterUser;
 use Depense\Module\User\Model\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
 class UserFixtures extends Fixture
 {
-    protected UserManagerInterface $userManager;
+    protected ActionPerformer $actionPerformer;
 
-    public function __construct(UserManagerInterface $userManager)
+    public function __construct(ActionPerformer $actionPerformer)
     {
-        $this->userManager = $userManager;
+        $this->actionPerformer = $actionPerformer;
     }
 
     /**
@@ -32,10 +33,12 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $user = new User();
+        $user->setFirstName('foo');
+        $user->setLastName('bar');
         $user->setEmail('test@mail.com');
         $user->setPlainPassword('password');
 
-        $this->userManager->updateUser($user);
+        $this->actionPerformer->perform(new RegisterUser($user));
 
         $manager->flush();
     }

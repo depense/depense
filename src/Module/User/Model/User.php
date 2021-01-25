@@ -239,6 +239,11 @@ class User implements UserInterface
         $this->lastName = $lastName;
     }
 
+    public function getFullName(): string
+    {
+        return sprintf('%s %s', $this->firstName, $this->lastName);
+    }
+
     /**
      * @inheritDoc
      */

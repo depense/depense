@@ -16,3 +16,27 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Module/User/Resources/config/doctrine'
                 prefix: Depense\Module\User\Model
                 alias: User
+            Account:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Module/Account/Resources/config/doctrine'
+                prefix: Depense\Module\Account\Model
+                alias: Account
+            Wallet:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Module/Wallet/Resources/config/doctrine'
+                prefix: Depense\Module\Wallet\Model
+                alias: Wallet
+            Taxonomy:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Module/Taxonomy/Resources/config/doctrine'
+                prefix: Depense\Module\Taxonomy\Model
+                alias: Taxonomy
+            Transaction:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Module/Transaction/Resources/config/doctrine'
+                prefix: Depense\Module\Transaction\Model
+                alias: Transaction

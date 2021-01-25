@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Depense\Module\User\Action;
 
+use Depense\Module\Account\Action\CreateAccount;
+use Depense\Module\Core\Action\ActionPerformer;
 use Depense\Module\Core\Action\HandlerInterface;
 use Depense\Module\User\Event\UserRegisteredEvent;
 use Depense\Module\User\Manager\UserManagerInterface;
@@ -23,10 +25,13 @@ class RegisterUserHandler implements HandlerInterface
 
     private EventDispatcherInterface $eventDispatcher;
 
-    public function __construct(UserManagerInterface $userManager, EventDispatcherInterface $eventDispatcher)
+    private ActionPerformer $actionPerformer;
+
+    public function __construct(UserManagerInterface $userManager, EventDispatcherInterface $eventDispatcher, ActionPerformer $actionPerformer)
     {
         $this->userManager = $userManager;
         $this->eventDispatcher = $eventDispatcher;
+        $this->actionPerformer = $actionPerformer;
     }
 
     public function __invoke(RegisterUser $registerUser)
@@ -34,6 +39,10 @@ class RegisterUserHandler implements HandlerInterface
         $user = $registerUser->getUser();
 
         $this->userManager->updateUser($user);
+
+        $this->actionPerformer->perform(new CreateUserPreference($user));
+        $this->actionPerformer->perform(new CreateAccount($user));
+
         $this->eventDispatcher->dispatch(new UserRegisteredEvent($user));
     }
 }

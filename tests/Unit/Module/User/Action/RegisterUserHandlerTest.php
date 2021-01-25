@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Depense\Tests\Unit\Module\User\Action;
 
+use Depense\Module\Account\Action\CreateAccount;
+use Depense\Module\Core\Action\ActionPerformer;
 use Depense\Module\User\Action\RegisterUser;
 use Depense\Module\User\Action\RegisterUserAction;
 use Depense\Module\User\Action\RegisterUserHandler;
@@ -34,14 +36,22 @@ class RegisterUserHandlerTest extends TestCase
      */
     protected MockObject $eventDispatcher;
 
+    /**
+     * @var MockObject|ActionPerformer
+     */
+    protected MockObject $actionPerformer;
+
     protected RegisterUserHandler $action;
 
     protected function setUp(): void
     {
         $this->userManager = $this->getMockBuilder('Depense\Module\User\Manager\UserManagerInterface')->getMock();
         $this->eventDispatcher = $this->getMockBuilder('Symfony\Contracts\EventDispatcher\EventDispatcherInterface')->getMock();
+        $this->actionPerformer = $this->getMockBuilder('Depense\Module\Core\Action\ActionPerformer')
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $this->action = new RegisterUserHandler($this->userManager, $this->eventDispatcher);
+        $this->action = new RegisterUserHandler($this->userManager, $this->eventDispatcher, $this->actionPerformer);
     }
 
     public function testRegisterUser(): void
@@ -52,6 +62,10 @@ class RegisterUserHandlerTest extends TestCase
         $this->userManager->expects($this->once())
             ->method('updateUser')
             ->with($user);
+
+        $this->actionPerformer->expects($this->once())
+            ->method('perform')
+            ->with(new CreateAccount($user));
 
         $this->eventDispatcher->expects($this->once())
             ->method('dispatch')

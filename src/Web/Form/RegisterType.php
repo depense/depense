@@ -17,7 +17,6 @@ use Depense\Module\User\Validator\Constraints\UniqueEmail;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,12 +24,13 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class RegisterUserType extends AbstractType
+class RegisterType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('email', EmailType::class, [
+                'label' => 'words.email',
                 'required' => true,
                 'constraints' => [
                     new NotBlank(),
@@ -40,6 +40,7 @@ class RegisterUserType extends AbstractType
                 ]
             ])
             ->add('firstName', TextType::class, [
+                'label' => 'words.first_name',
                 'required' => true,
                 'constraints' => [
                     new NotBlank(),
@@ -47,14 +48,15 @@ class RegisterUserType extends AbstractType
                 ]
             ])
             ->add('lastName', TextType::class, [
+                'label' => 'words.last_name',
                 'required' => true,
                 'constraints' => [
                     new NotBlank(),
                     new Length(['min' => 2, 'max' => 180])
                 ]
             ])
-            ->add('plainPassword', RepeatedType::class, [
-                'type' => PasswordType::class,
+            ->add('plainPassword', PasswordType::class, [
+                'label' => 'words.password',
                 'required' => true,
                 'constraints' => [
                     new NotBlank(),

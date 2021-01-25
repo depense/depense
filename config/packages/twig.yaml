@@ -1,2 +1,5 @@
 twig:
     default_path: '%depense.web_dir%/Resources/views'
+    form_themes: ['form/bootstrap_layout.html.twig']
+    globals:
+        depense: '@Depense\Web\Twig\DepenseAppVariable'

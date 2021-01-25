@@ -1,0 +1,7 @@
+services:
+    _defaults:
+        autowire: true
+
+    Depense\Module\Taxonomy\Repository\TaxonRepository:
+        arguments:
+            $className: 'Depense\Module\Taxonomy\Model\Taxon'

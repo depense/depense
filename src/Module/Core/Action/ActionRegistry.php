@@ -57,7 +57,7 @@ class ActionRegistry
      *
      * @return HandlerInterface
      */
-    public function getHandler(string $actionClass): HandlerInterface
+    public function getHandler(string $actionClass): ?HandlerInterface
     {
         return $this->actions[$actionClass];
     }

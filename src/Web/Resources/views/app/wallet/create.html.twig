@@ -1,0 +1,23 @@
+{% extends 'app/layout_centered.html.twig' %}
+
+{% block card %}
+<div class="card p-3 m-auto" style="max-width: 500px;">
+    <div class="card-header bg-transparent border-bottom-0">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h1 class="h2 font-weight-bold">New Wallet</h1>
+                <span class="depense-text-secondary">Create a new wallet with a predefined balance</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+        <button id="btnWalletCreate" class="btn btn-block depense-btn-primary py-2">Create wallet</button>
+
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}
